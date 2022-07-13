@@ -36,7 +36,6 @@ namespace :db do
   end
 
   desc 'Migrate the database'
-
   task :run_migrations do 
     binding.pry
     ActiveRecord::MigrationContext.new("db/migrate/").migrate
