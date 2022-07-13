@@ -1,6 +1,6 @@
 require 'activerecord'
 
-ActiveRcord::Base.establish_connection(
+ActiveRecord::Base.establish_connection(
   :adapter => "sqlite"
   :database => "../db/db.sqlite3"
 )
