@@ -1,4 +1,4 @@
-require 'activerecord'
+require 'active_record'
 
 class CreateTasks < ActiveRecord::Migration[7.0]
   def up 
