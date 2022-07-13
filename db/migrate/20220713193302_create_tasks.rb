@@ -1,7 +1,5 @@
-require 'active_record'
-
 class CreateTasks < ActiveRecord::Migration[7.0]
-  def up 
+  def self.up
     create_table :tasks do |t|
       t.string :name
       t.date :starts_on
@@ -9,8 +7,7 @@ class CreateTasks < ActiveRecord::Migration[7.0]
       t.boolean :completed
     end
   end
-
-  def down 
+  def self.down
     drop_table :tasks
   end
 end

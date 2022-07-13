@@ -38,6 +38,7 @@ namespace :db do
   desc 'Migrate the database'
 
   task :run_migrations do 
+    binding.pry
     ActiveRecord::MigrationContext.new("db/migrate/").migrate
     Rake::Task["db:schema"].invoke
     puts "DB migrated successfully"
@@ -47,6 +48,29 @@ namespace :db do
   task migrate: [:connect, :run_migrations]
 end
 
+namespace :g do 
+  desc 'Generate Migration'
+  task :migration do 
+    name = ARGV[1] || raise("Specify name: rake g:migration <migration>")
+    timestamp = Time.now.strftime("%Y%m%d%H%M%S")
+    path = File.expand_path("../db/migrate/#{timestamp}_#{name}.rb", __FILE__)
+    migration_class = name.split("_").map(&:capitalize).join
+
+    File.open(path, 'w') do |file|
+      file.write <<~EOF
+        class #{migration_class} < ActiveRecord::Migration[7.0]
+          def self.up
+          end
+          def self.down
+          end
+        end
+      EOF
+    end
+
+    puts "Migration #{path} created"
+    abort
+  end
+end
 
 
 
