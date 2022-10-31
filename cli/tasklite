@@ -1,0 +1,38 @@
+#! /usr/bin/ruby
+
+require 'optparse'
+require 'setup'
+
+include TaskLightSetup
+
+ARGV << '-h' if ARGV.empty?
+
+options = {}
+
+opt_parser = OptionParser.new do |opts|
+  opts.banner = 'Usage cli/tasklite [options]'
+
+  opts.on('n', 'new [STRING]', String, 'add new task') do |input|
+    options.merge(command: :new, value: input)
+  end
+
+  opts.on('-h', '--help', 'tasklite menu') do
+    puts opts
+
+    exit
+  end
+end
+
+opt_parser.parse!
+
+initialize_db_connection
+
+Tasklite::App::Run.init(options)
+
+# options = {command: :new, value: 'somestring'}
+
+# tasklite new "go to gym" --starts_at 12:00 --ends_at 16:00
+# tasklite update 12334 --starts_at 12:00 --ends_at 16:00
+# tasklite search <some text> --between 12:00, 16:00
+# tasklite list
+# tasklite list --period yesterday | today | tommorrow | datetime
